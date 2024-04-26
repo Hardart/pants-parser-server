@@ -1,6 +1,5 @@
 import { ArchiveTrack } from '../models/ArchiveTrack'
 import { Track } from '../models/Track'
-import { ITrackMetadata } from '../types'
 import ErrorService from './error-service'
 
 export class TrackService {
