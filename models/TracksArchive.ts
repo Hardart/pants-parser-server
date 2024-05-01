@@ -1,28 +1,28 @@
 import { Schema, model, InferSchemaType } from 'mongoose'
 
-const ArchiveTrackSchema = new Schema(
+const TrackArchiveSchema = new Schema(
   {
     createdAt: { type: Schema.Types.Date, required: true },
-    trackId: { type: Schema.Types.ObjectId, ref: 'Track' },
+    trackId: { type: Schema.Types.ObjectId, ref: 'Track' }
   },
   { timestamps: false, versionKey: false }
 )
 
-ArchiveTrackSchema.set('toJSON', {
+TrackArchiveSchema.set('toJSON', {
   versionKey: false,
   transform: function (_, ret) {
     ret.track = ret.trackId
     delete ret._id
     delete ret.trackId
-  },
+  }
 })
 
-ArchiveTrackSchema.virtual('track', {
+TrackArchiveSchema.virtual('track', {
   ref: 'Track',
   localField: 'trackId',
   foreignField: '_id',
-  justOne: true,
+  justOne: true
 })
 
-export type ArchiveTrack = InferSchemaType<typeof ArchiveTrackSchema>
-export const ArchiveTrack = model('ArchiveTrack', ArchiveTrackSchema)
+export type TrackArchive = InferSchemaType<typeof TrackArchiveSchema>
+export const TrackArchive = model('ArchiveTrack', TrackArchiveSchema)

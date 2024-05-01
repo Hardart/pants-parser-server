@@ -5,8 +5,7 @@
   "main": "server.js",
   "module": "true",
   "scripts": {
-    "dev:server": "tsx watch server",
-    "start": "nodemon server.ts"
+    "start": "tsx watch server"
   },
   "keywords": [],
   "author": "",

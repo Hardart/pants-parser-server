@@ -1,10 +1,9 @@
-import type { ItunesResponse, ItunesTrackMeta } from '../types'
-import ErrorService from './error-service'
+import type { ITunesResponse, ITunesTrackMeta } from '../types'
 
-export class Itunes {
+export class ITunes {
   private static term: string = ''
 
-  static async searchOneTrack(searchTerm: string): Promise<ItunesTrackMeta | null> {
+  static async searchOneTrack(searchTerm: string): Promise<ITunesTrackMeta | null> {
     this.term = searchTerm
     const data = await this.fetchTrack()
     if (!data) return null
@@ -13,15 +12,11 @@ export class Itunes {
     return { cover: artworkUrl60, preview: previewUrl }
   }
 
-  private static async fetchTrack() {
+  private static async fetchTrack(): Promise<ITunesResponse> {
     console.log('search: ' + this.searchParams)
-    try {
-      const response = await fetch(`https://itunes.apple.com/search?${this.searchParams}`)
-      return (await response.json()) as ItunesResponse
-    } catch (error) {
-      ErrorService.append(error)
-      return null
-    }
+    const response = await fetch(`https://itunes.apple.com/search?${this.searchParams}`)
+    const meta = await response.json()
+    return meta
   }
 
   private static get searchParams() {
