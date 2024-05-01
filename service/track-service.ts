@@ -13,10 +13,6 @@ class TrackService {
   async list() {
     return await Track.find().select('-updatedAt -preview').sort({ createdAt: 'desc' })
   }
-
-  async count() {
-    return await Track.find().countDocuments()
-  }
 }
 
 export default new TrackService()
