@@ -6,6 +6,7 @@ import trackArchiveService from './service/track-archive-service'
 import { ITunes } from './service/iTunes-service'
 import { ITrackMetadata } from './types'
 import { connectToDB } from './mongo-connect'
+import userService from './service/user-service'
 let trackData: string | undefined = ''
 let trackCacheData: Track | null
 const io = new Server(3071, {
@@ -36,6 +37,12 @@ function onMetadata(metadata: Map<string, string>) {
 }
 
 async function findHost(id: string) {
+  const host = await userService.findById(id)
+  if (host) {
+    console.log('HOST: FINDED')
+    io.emit('host:data', host)
+  }
+
   // try {
   //   const body = JSON.stringify({ id })
   //   const res = await fetch(FIND_HOST_URL, { method: 'POST', body, headers: { 'Content-Type': 'application/json' } })
