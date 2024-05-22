@@ -1,5 +1,5 @@
 {
-  "name": "radio-server",
+  "name": "radio-parser",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
