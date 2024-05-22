@@ -78,5 +78,3 @@ async function addTrackToDB(trackData: string, artistName: string, trackTitle: s
   trackArchiveService.save(createdTrack.id)
   io.emit('meta', trackCacheData)
 }
-
-connectToDB()
