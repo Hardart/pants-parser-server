@@ -2,7 +2,7 @@ import { Parser } from 'icecast-parser'
 import ErrorService from './service/error-service'
 
 const radioStation = new Parser({
-  url: 'https://stream.lolamedia.ru/rsh_federal',
+  url: 'https://stream.elarin.ru/rsh_federal',
   emptyInterval: 10,
   errorInterval: 10,
   metadataInterval: 6,
