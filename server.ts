@@ -11,7 +11,10 @@ let trackData: string | undefined = ''
 let trackCacheData: Track | null
 
 const io = new Server(3071, {
-  cors: { origin: 'http://localhost:8080' }
+  allowRequest: (req, callback) => {
+    const noOriginHeader = req.headers.origin === undefined
+    callback(null, noOriginHeader) // only allow requests without 'origin' header
+  }
 })
 
 io.on('connection', (socket) => {
