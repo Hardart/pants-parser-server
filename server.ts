@@ -9,8 +9,9 @@ import { connectToDB } from './mongo-connect'
 import userService from './service/user-service'
 let trackData: string | undefined = ''
 let trackCacheData: Track | null
+
 const io = new Server(3071, {
-  cors: { allowedHeaders: '*' }
+  cors: { allowedHeaders: '*', origin: 'http://localhost:3000' }
 })
 
 io.on('connection', (socket) => {
