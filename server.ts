@@ -11,7 +11,7 @@ let trackData: string | undefined = ''
 let trackCacheData: Track | null
 
 const io = new Server(3071, {
-  cors: { allowedHeaders: '*' }
+  cors: { origin: 'http://localhost:8080' }
 })
 
 io.on('connection', (socket) => {
