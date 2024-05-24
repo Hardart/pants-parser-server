@@ -14,6 +14,8 @@ const io = new Server(3071, {
 })
 
 io.on('connection', (socket) => {
+  console.log('Connected: ' + socket.id)
+
   socket.on('user:connect', () => {
     socket.emit('meta', trackCacheData)
   })
@@ -78,3 +80,5 @@ async function addTrackToDB(trackData: string, artistName: string, trackTitle: s
   trackArchiveService.save(createdTrack.id)
   io.emit('meta', trackCacheData)
 }
+
+connectToDB()

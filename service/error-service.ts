@@ -1,9 +1,14 @@
 import fs from 'fs'
+
 export default class ErrorService {
   static get dateAndTime() {
-    return Intl.DateTimeFormat('ru', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(
-      new Date()
-    )
+    return Intl.DateTimeFormat('ru', {
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date())
   }
 
   static addError(error: unknown) {
