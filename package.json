@@ -5,7 +5,9 @@
   "main": "server.js",
   "module": "true",
   "scripts": {
-    "start": "tsx watch server"
+    "watch": "tsx watch server",
+    "build": "tsc",
+    "start": "NODE_ENV=production node dist/server.js"
   },
   "keywords": [],
   "author": "",
