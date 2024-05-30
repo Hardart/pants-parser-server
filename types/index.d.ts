@@ -1,3 +1,5 @@
+import { Track } from '../models/Track'
+
 export interface ITunesResponse {
   resultCount: number
   results: ITunesTrack[]
@@ -30,4 +32,10 @@ export interface ICoverData {
   art100: string
   art300: string
   art600: string
+}
+
+export interface ITrackData {
+  isTrackInit: boolean
+  cache: Track | undefined
+  title: string | undefined
 }

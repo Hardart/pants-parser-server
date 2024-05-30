@@ -2,7 +2,7 @@ export class CacheService {
   private static trackMeta = {
     artistName: '',
     trackTitle: '',
-    cover: '',
+    cover: ''
   }
 
   static get metaData() {

@@ -5,8 +5,7 @@ const TrackSchema = new Schema(
     artistName: String,
     trackTitle: String,
     cover: String,
-    preview: String,
-    itinesId: Number
+    preview: String
   },
   { timestamps: true, versionKey: false, toObject: { virtuals: true } }
 )
