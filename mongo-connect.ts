@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import path from 'path'
-// const envPath = process.env.NODE_ENV === 'production' ? path.join(__dirname, '..', '/.env') : __dirname + '/.env'
-const envPath = path.join(__dirname, '..', '/.env')
+const envPath = process.env.NODE_ENV === 'production' ? path.join(__dirname, '..', '/.env') : __dirname + '/.env'
+// const envPath = path.join(__dirname, '..', '/.env')
 dotenv.config({ path: envPath })
 
 export async function connectToDB() {

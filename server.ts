@@ -7,6 +7,7 @@ import { ITunes } from './service/iTunes-service'
 import { ITrackMetadata } from './types'
 import { connectToDB } from './mongo-connect'
 import userService from './service/user-service'
+let trackInit: string | undefined = undefined
 let trackData: string | undefined = ''
 let trackCacheData: Track | null
 
@@ -21,7 +22,7 @@ io.on('connection', (socket) => {
     socket.emit('meta', trackCacheData)
   })
   socket.emit('meta', trackCacheData)
-  console.log('SEND:' + trackCacheData?.artistName)
+  // console.log('SEND:' + trackCacheData?.artistName)
   socket.on('host:online', ({ hostId, state }) => {
     if (state) findHost(hostId)
     else io.emit('host:data', undefined)
@@ -34,15 +35,16 @@ function onMetadata(metadata: Map<string, string>) {
   const streamTitle = metadata.get('StreamTitle')
   if (trackData !== streamTitle) {
     trackData = streamTitle
-    console.log('Get track meta')
-    saveTrack()
+    // console.log('Get track meta')
+    if (trackInit) saveTrack()
+    else trackInit = trackData
   }
 }
 
 async function findHost(id: string) {
   const host = await userService.findById(id)
   if (host) {
-    console.log('HOST: FINDED')
+    // console.log('HOST: FINDED')
     io.emit('host:data', host)
   }
 
@@ -63,12 +65,12 @@ async function saveTrack() {
   const track = await trackService.findOne(artistName, trackTitle)
   if (track) {
     trackArchiveService.save(track.id)
-    console.log('FIND: ' + trackData)
+    // console.log('FIND: ' + trackData)
     trackCacheData = track
     io.emit('meta', trackCacheData)
   } else {
     addTrackToDB(trackData, artistName, trackTitle)
-    console.log('SAVE: ' + trackData)
+    // console.log('SAVE: ' + trackData)
   }
 }
 
