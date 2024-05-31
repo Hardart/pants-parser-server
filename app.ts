@@ -11,8 +11,12 @@ export default (io: Server, trackData: ITrackData) => ({
     const streamTitle = metadata.get('StreamTitle')
     if (trackData.title !== streamTitle) {
       trackData.title = streamTitle
-      if (trackData.isTrackInit) this.saveTrack()
-      else trackData.isTrackInit = true
+      if (trackData.isTrackInit) {
+        this.saveTrack()
+      } else {
+        this.findLastTrack()
+        trackData.isTrackInit = true
+      }
     }
   },
 
@@ -31,6 +35,14 @@ export default (io: Server, trackData: ITrackData) => ({
       io.emit('meta', trackData.cache)
     } else {
       this.addTrackToDB(trackData.title, artistName, trackTitle)
+    }
+  },
+
+  async findLastTrack() {
+    const track = await trackService.findLast()
+    if (track) {
+      trackData.cache = track
+      io.emit('meta', trackData.cache)
     }
   },
 
