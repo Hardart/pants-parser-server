@@ -40,10 +40,8 @@ export default (io: Server, trackData: ITrackData) => ({
 
   async findLastTrack() {
     const track = await trackService.findLast()
-    if (track) {
-      trackData.cache = track
-      io.emit('meta', trackData.cache)
-    }
+    trackData.cache = track
+    io.emit('meta', trackData.cache)
   },
 
   async addTrackToDB(searchTerm: string, artistName: string, trackTitle: string) {
