@@ -6,13 +6,13 @@ import trackArchiveService from './service/track-archive-service'
 import { jingleData } from './utils/jingle'
 import { ITunes } from './service/iTunes-service'
 
-export default (io: Server, { cache, title, isTrackInit }: ITrackData) => ({
+export default (io: Server, trackData: ITrackData) => ({
   onMetadata(metadata: Map<string, string>) {
     const streamTitle = metadata.get('StreamTitle')
-    if (title !== streamTitle) {
-      title = streamTitle
-      if (isTrackInit) this.saveTrack()
-      else isTrackInit = true
+    if (trackData.title !== streamTitle) {
+      trackData.title = streamTitle
+      if (trackData.isTrackInit) this.saveTrack()
+      else trackData.isTrackInit = true
     }
   },
 
@@ -22,25 +22,25 @@ export default (io: Server, { cache, title, isTrackInit }: ITrackData) => ({
   },
 
   async saveTrack() {
-    if (!title) return io.emit('meta', jingleData)
-    const [artistName, trackTitle] = title.split(' - ')
+    if (!trackData.title) return io.emit('meta', jingleData)
+    const [artistName, trackTitle] = trackData.title.split(' - ')
     const track = await trackService.findOne(artistName, trackTitle)
     if (track) {
       trackArchiveService.save(track.id)
-      cache = track
-      io.emit('meta', cache)
+      trackData.cache = track
+      io.emit('meta', trackData.cache)
     } else {
-      this.addTrackToDB(title, artistName, trackTitle)
+      this.addTrackToDB(trackData.title, artistName, trackTitle)
     }
   },
 
-  async addTrackToDB(trackData: string, artistName: string, trackTitle: string) {
-    const iTunesResponse = await ITunes.searchOneTrack(trackData)
+  async addTrackToDB(searchTerm: string, artistName: string, trackTitle: string) {
+    const iTunesResponse = await ITunes.searchOneTrack(searchTerm)
     if (!iTunesResponse) return
     const trackMetaData: ITrackMetadata = { ...iTunesResponse, artistName, trackTitle }
     const createdTrack = await trackService.save(trackMetaData)
-    cache = createdTrack
+    trackData.cache = createdTrack
     trackArchiveService.save(createdTrack.id)
-    io.emit('meta', cache)
+    io.emit('meta', trackData.cache)
   }
 })

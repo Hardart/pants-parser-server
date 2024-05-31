@@ -17,6 +17,7 @@ const io = new Server(3071, ioProps)
 const fns = app(io, trackData)
 
 io.on('connection', (socket) => {
+  console.log(trackData)
   if (trackData.cache) socket.emit('meta', trackData.cache)
   socket.on('user:connect', () => socket.emit('meta', trackData.cache))
 
