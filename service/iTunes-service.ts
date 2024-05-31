@@ -13,7 +13,7 @@ export class ITunes {
   }
 
   private static async fetchTrack(): Promise<ITunesResponse> {
-    console.log('search: ' + this.searchParams)
+    // console.log('search: ' + this.searchParams)
     const response = await fetch(`https://itunes.apple.com/search?${this.searchParams}`)
     const meta = await response.json()
     return meta as ITunesResponse
