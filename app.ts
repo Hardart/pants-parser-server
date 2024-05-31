@@ -5,6 +5,7 @@ import trackService from './service/track-service'
 import trackArchiveService from './service/track-archive-service'
 import { jingleData } from './utils/jingle'
 import { ITunes } from './service/iTunes-service'
+import { Track } from './models/Track'
 
 export default (io: Server, trackData: ITrackData) => ({
   onMetadata(metadata: Map<string, string>) {
@@ -39,9 +40,12 @@ export default (io: Server, trackData: ITrackData) => ({
   },
 
   async findLastTrack() {
-    const track = await trackService.findLast()
-    trackData.cache = track
-    io.emit('meta', trackData.cache)
+    const tracks = await trackArchiveService.findLast()
+    if (tracks.length) {
+      const track = tracks[0].trackId as unknown as Track
+      trackData.cache = track
+      io.emit('meta', trackData.cache)
+    }
   },
 
   async addTrackToDB(searchTerm: string, artistName: string, trackTitle: string) {

@@ -1,3 +1,4 @@
+import { Track } from '../models/Track'
 import { TrackArchive } from '../models/TracksArchive'
 
 export class TrackArchiveService {
@@ -11,6 +12,10 @@ export class TrackArchiveService {
   async findNewest() {
     const track = await TrackArchive.findOne().select('createdAt').sort({ createdAt: 'desc' })
     return track ? track.createdAt.toISOString() : new Date().toISOString()
+  }
+
+  async findLast() {
+    return await TrackArchive.find().populate('trackId').sort({ createdAt: 'desc' }).limit(1)
   }
 }
 
