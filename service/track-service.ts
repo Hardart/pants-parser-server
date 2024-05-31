@@ -7,7 +7,7 @@ class TrackService {
   }
 
   async findLast() {
-    return await Track.findOne().select('-updatedAt -preview').sort({ createdAt: 'desc' })
+    return (await Track.find().select('-updatedAt -preview').sort({ createdAt: 'desc' }).limit(1))[0]
   }
 
   async save(trackData: ITrackMetadata) {
