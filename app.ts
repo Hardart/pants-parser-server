@@ -11,7 +11,7 @@ import ErrorService from './service/error-service'
 export default (io: Server, trackData: ITrackData) => ({
   onMetadata(metadata: Map<string, string>) {
     const streamTitle = metadata.get('StreamTitle')
-    ErrorService.saveStream(streamTitle)
+    // ErrorService.saveStream(streamTitle)
     if (trackData.title !== streamTitle) {
       trackData.title = streamTitle
       if (trackData.isTrackInit) {
