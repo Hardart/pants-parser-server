@@ -6,6 +6,7 @@ import trackArchiveService from './service/track-archive-service'
 import { jingleData } from './utils/jingle'
 import { ITunes } from './service/iTunes-service'
 import { Track } from './models/Track'
+import ErrorService from './service/error-service'
 
 export default (io: Server, trackData: ITrackData) => ({
   onMetadata(metadata: Map<string, string>) {
@@ -50,7 +51,7 @@ export default (io: Server, trackData: ITrackData) => ({
 
   async addTrackToDB(searchTerm: string, artistName: string, trackTitle: string) {
     const iTunesResponse = await ITunes.searchOneTrack(searchTerm)
-    if (!iTunesResponse) return
+    if (!iTunesResponse) return ErrorService.saveStream(`Can't find: ${searchTerm}`)
     const trackMetaData: ITrackMetadata = { ...iTunesResponse, artistName, trackTitle }
     const createdTrack = await trackService.save(trackMetaData)
     trackData.cache = createdTrack
