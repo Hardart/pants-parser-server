@@ -11,6 +11,14 @@ export default class ErrorService {
     }).format(new Date())
   }
 
+  static get date() {
+    return Intl.DateTimeFormat('ru', {
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit'
+    }).format(new Date())
+  }
+
   static addError(error: unknown) {
     try {
       fs.appendFileSync('./logs/errors.txt', `${this.dateAndTime}: ${error}\n`, { encoding: 'utf-8' })
@@ -21,7 +29,7 @@ export default class ErrorService {
 
   static saveStream(streamTitle?: string) {
     try {
-      fs.appendFileSync('./logs/stream.txt', `${this.dateAndTime}: ${streamTitle}\n`, { encoding: 'utf-8' })
+      fs.appendFileSync(`./logs/${this.date}_stream.txt`, `${this.dateAndTime}: ${streamTitle}\n`, { encoding: 'utf-8' })
     } catch (error) {
       console.log(error)
     }
