@@ -24,5 +24,6 @@ export class CacheService {
     this._trackMeta.artistName = 'Радио Штаны'
     this._trackMeta.trackTitle = 'Прямой эфир'
     this._trackMeta.cover = '/assets/simple_logo.svg'
+    return this._trackMeta
   }
 }

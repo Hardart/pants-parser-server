@@ -9,14 +9,13 @@ import { CacheService } from '../service/cache-service'
 
 class BaseParser {
   static isTrackInit: boolean = false
-  static trackData: string | undefined = undefined
+  static trackData: string
   static cachedTrack: (Track & { id?: string }) | null = null
   static track: (Track & { id?: string }) | null = null
 }
 
 class TrackParser extends BaseParser {
   private static async _tryFindTrack() {
-    if (typeof this.trackData !== 'string') return
     const { artistName, trackTitle } = MetadataService.parseTrackTitle(this.trackData)
 
     this.track = await trackService.findOne(artistName, trackTitle)
@@ -24,7 +23,6 @@ class TrackParser extends BaseParser {
   }
 
   private static async _saveToDataBase() {
-    if (typeof this.trackData !== 'string') return CacheService.addBaseData()
     const { artistName, trackTitle, searchTerm } = MetadataService.parseTrackTitle(this.trackData)
     const iTunesResponse = await ITunes.searchSingleTrack(searchTerm)
 
@@ -61,7 +59,7 @@ class TrackParser extends BaseParser {
 export class IcecastParser {
   static async readMetadata(io: Server, metadata: Map<string, string>) {
     const streamTitle = metadata.get('StreamTitle')
-
+    if (typeof streamTitle === 'undefined' || streamTitle === '') return io.emit('meta', CacheService.addBaseData())
     if (TrackParser.trackData !== streamTitle) {
       TrackParser.trackData = streamTitle
       if (TrackParser.isTrackInit) {
