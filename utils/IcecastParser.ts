@@ -59,7 +59,7 @@ class TrackParser extends BaseParser {
 export class IcecastParser {
   static async readMetadata(io: Server, metadata: Map<string, string>) {
     const streamTitle = metadata.get('StreamTitle')
-    if (typeof streamTitle === 'undefined' || streamTitle === '') return io.emit('meta', CacheService.addBaseData())
+    if (typeof streamTitle === 'undefined' || streamTitle === '') return io.emit('meta', CacheService.emptyData)
     if (TrackParser.trackData !== streamTitle) {
       TrackParser.trackData = streamTitle
       if (TrackParser.isTrackInit) {
