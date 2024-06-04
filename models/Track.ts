@@ -2,8 +2,8 @@ import { Schema, model, InferSchemaType } from 'mongoose'
 
 const TrackSchema = new Schema(
   {
-    artistName: String,
-    trackTitle: String,
+    artistName: { type: String, required: true },
+    trackTitle: { type: String, required: true },
     cover: String,
     preview: String
   },

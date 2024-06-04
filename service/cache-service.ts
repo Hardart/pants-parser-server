@@ -1,20 +1,28 @@
+import { Track } from '../models/Track'
+
 export class CacheService {
-  private static trackMeta = {
-    artistName: '',
-    trackTitle: '',
-    cover: ''
+  static get emptyData() {
+    return {
+      artistName: '',
+      trackTitle: '',
+      cover: '',
+      preview: ''
+    }
   }
+  private static _trackMeta: Omit<Track, 'createdAt' | 'updatedAt'> = { ...this.emptyData }
 
   static get metaData() {
-    return this.trackMeta
+    return this._trackMeta
   }
 
-  static saveTrack(artistName: string, trackTitle: string) {
-    this.trackMeta.artistName = artistName
-    this.trackMeta.trackTitle = trackTitle
+  static addData(track: Track | null) {
+    if (!track) this.addBaseData()
+    else this._trackMeta = track
   }
 
-  static saveCovers(cover: string) {
-    this.trackMeta.cover = cover
+  static addBaseData() {
+    this._trackMeta.artistName = 'Радио Штаны'
+    this._trackMeta.trackTitle = 'Прямой эфир'
+    this._trackMeta.cover = '/assets/simple_logo.svg'
   }
 }
