@@ -5,7 +5,7 @@ export class CacheService {
     return {
       artistName: 'Радио Штаны',
       trackTitle: 'Прямой эфир',
-      cover: '/assets/simple_logo.svg',
+      cover: '/assets/no_image.svg',
       preview: ''
     }
   }
