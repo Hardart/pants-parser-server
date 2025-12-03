@@ -3,8 +3,8 @@ import ErrorService from './service/error-service'
 
 export const radioStation = new Parser({
   url: 'https://stream.elarin.ru/rsh_federal',
-  emptyInterval: 10,
-  errorInterval: 10,
+  emptyInterval: 120,
+  errorInterval: 120,
   metadataInterval: 6,
   userAgent: 'HDRT_Parser'
 })
