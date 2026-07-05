@@ -12,7 +12,9 @@ const TrackArchiveSchema = new Schema(
 TrackArchiveSchema.set('toJSON', {
   versionKey: false,
   transform: function (_, ret) {
+    //@ts-ignore
     ret.track = ret.trackId
+    //@ts-ignore
     delete ret._id
     delete ret.trackId
   }
