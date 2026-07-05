@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import path from 'path'
+import ErrorService from './service/error-service'
 const envPath = process.env.NODE_ENV === 'production' ? path.join(__dirname, '..', '/.env') : __dirname + '/.env'
 dotenv.config({ path: envPath })
 
@@ -13,5 +14,6 @@ export async function connectToDB() {
   } catch (error) {
     console.log('====================================')
     console.error(`ERROR: Ошибка при подключении к БД!!!`)
+    ErrorService.addError(error)
   }
 }

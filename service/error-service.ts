@@ -1,7 +1,8 @@
 import fs from 'fs'
 
 export default class ErrorService {
-  private static basePath = process.env.NODE_ENV === 'production' ? '../logs' : './logs'
+  private static logsFolder = process.env.NODE_ENV === 'production' ? 'logs' : 'dev_logs'
+  private static basePath = this.logsFolder
   static get dateAndTime() {
     return Intl.DateTimeFormat('ru', {
       year: '2-digit',
