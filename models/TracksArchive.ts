@@ -1,5 +1,4 @@
 import { Schema, model, InferSchemaType } from 'mongoose'
-import { Track } from './Track'
 
 const TrackArchiveSchema = new Schema(
   {
